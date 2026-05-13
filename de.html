@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nitaii Learning Lab. Ein forschungsbasiertes EdTech-Labor in Yokohama, das biometrisch informierte Lernwerkzeuge entwickelt. Gegründet von Dr. Gabriella Nishizawa.">
+  <title>Nitaii Learning Lab. Wo Kognition auf Code trifft.</title>
+  <style>
+    :root {
+      --bg: #0d1421;
+      --bg-2: #141e30;
+      --bg-card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f5f7;
+      --text-muted: rgba(245,245,247,0.6);
+      --accent: #4fc3f7;
+      --accent-2: #00e5ff;
+      --pulse: #ff5e7e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+    .label {
+      font-size: 0.75em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    nav {
+      padding: 24px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(13,20,33,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .logo {
+      font-size: 1.1em;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    a.logo:hover { opacity: 0.85; }
+    .logo .dot { color: var(--accent-2); }
+    .logo small { font-weight: 400; color: var(--text-muted); font-size: 0.85em; margin-left: 4px; }
+    nav ul { list-style: none; display: flex; gap: 28px; align-items: center; }
+    nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9em; transition: color 0.2s; }
+    nav a:hover { color: var(--text); }
+    .lang-switch {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8em;
+    }
+    .lang-switch a {
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 100px;
+    }
+    .lang-switch a.active {
+      color: var(--text);
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .hero { padding: 110px 0 130px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; top: 50%; left: -10%;
+      width: 60%; height: 600px;
+      background: radial-gradient(circle, rgba(79,195,247,0.15) 0%, transparent 60%);
+      transform: translateY(-50%); pointer-events: none;
+    }
+    .hero::after {
+      content: ""; position: absolute; top: 30%; right: -10%;
+      width: 50%; height: 500px;
+      background: radial-gradient(circle, rgba(255,94,126,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
+    .hero h1 { font-size: 3.6em; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .hero h1 .grad {
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero .lead { font-size: 1.15em; color: var(--text-muted); margin-bottom: 36px; max-width: 540px; }
+    .hero-cta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 14px 28px; border-radius: 100px;
+      text-decoration: none; font-weight: 600; font-size: 0.95em;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%); color: var(--bg);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(79,195,247,0.3); }
+    .btn-ghost { color: var(--text); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--bg-card); }
+
+    .pulse-visual { position: relative; aspect-ratio: 1 / 1; max-width: 380px; margin-left: auto; }
+    .pulse-circle {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, rgba(79,195,247,0.3) 0%, transparent 60%);
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    .pulse-circle.delay-1 {
+      animation-delay: 1s;
+      background: radial-gradient(circle at 50% 50%, rgba(255,94,126,0.2) 0%, transparent 60%);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(0.95); opacity: 0.7; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+    .hrv-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .hrv-path {
+      fill: none; stroke: var(--accent-2); stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+      filter: drop-shadow(0 0 8px var(--accent-2));
+      stroke-dasharray: 1200; stroke-dashoffset: 1200;
+      animation: drawLine 4s ease-in-out infinite;
+    }
+    @keyframes drawLine {
+      0% { stroke-dashoffset: 1200; opacity: 0; }
+      40% { stroke-dashoffset: 0; opacity: 1; }
+      90% { stroke-dashoffset: 0; opacity: 1; }
+      100% { stroke-dashoffset: -1200; opacity: 0; }
+    }
+    .pulse-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); width: 80px; height: 80px;
+      background: var(--pulse); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 40px var(--pulse);
+      animation: heartbeat 1.2s ease-in-out infinite;
+    }
+    .pulse-center::after { content: "♥"; color: white; font-size: 2em; }
+    @keyframes heartbeat {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .mission { padding: 60px 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .mission-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+    .mission-item h4 { font-size: 0.85em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; font-weight: 600; }
+    .mission-item p { color: var(--text); font-size: 1em; font-weight: 500; }
+
+    section { padding: 100px 0; }
+    h2 { font-size: 2.4em; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 28px; max-width: 760px; }
+    .section-lead { font-size: 1.1em; color: var(--text-muted); max-width: 680px; margin-bottom: 60px; }
+
+    .philosophy { padding: 120px 0; background: var(--bg); position: relative; overflow: hidden; }
+    .philosophy::before {
+      content: ""; position: absolute; top: 0; right: -20%; width: 80%; height: 100%;
+      background: radial-gradient(circle at center, rgba(255,94,126,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .philosophy::after {
+      content: ""; position: absolute; bottom: 0; left: -20%; width: 80%; height: 100%;
+      background: radial-gradient(circle at center, rgba(79,195,247,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .philosophy .container { position: relative; z-index: 2; }
+    .philosophy-headline { font-size: 3.2em; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 40px; max-width: 880px; }
+    .philosophy-headline .grad {
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .philosophy-body { max-width: 720px; font-size: 1.1em; color: var(--text-muted); }
+    .philosophy-body p { margin-bottom: 20px; }
+    .philosophy-body p strong { color: var(--text); font-weight: 500; }
+    .philosophy-body em { color: var(--accent); font-style: normal; font-weight: 500; }
+    .philosophy-closer { margin-top: 48px; padding: 32px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 720px; }
+    .philosophy-closer p { font-size: 1.3em; color: var(--text); font-weight: 500; line-height: 1.4; }
+    .philosophy-closer strong {
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    .about-nitaii-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .pillars { display: flex; flex-direction: column; gap: 24px; }
+    .pillar { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; border-left: 3px solid var(--accent); }
+    .pillar h4 { color: var(--text); font-size: 1.05em; font-weight: 600; margin-bottom: 6px; }
+    .pillar p { color: var(--text-muted); font-size: 0.95em; }
+
+    .projects-section { background: var(--bg-2); }
+    .project-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 48px; margin-top: 40px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-card::before { content: ""; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, transparent 60%); pointer-events: none; }
+    .project-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+    .project-meta { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .project-meta span { font-size: 0.75em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+    .project-meta span:not(:last-child)::after { content: "·"; margin-left: 12px; color: var(--text-muted); }
+    .project-card h3 { font-size: 2em; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .project-card p { color: var(--text-muted); margin-bottom: 20px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .tag { font-size: 0.75em; padding: 5px 12px; border-radius: 100px; background: rgba(79,195,247,0.1); color: var(--accent); border: 1px solid rgba(79,195,247,0.2); }
+    .project-status { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85em; color: var(--text-muted); }
+    .status-dot { width: 8px; height: 8px; background: var(--accent-2); border-radius: 50%; box-shadow: 0 0 10px var(--accent-2); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .project-mini-visual { aspect-ratio: 1; background: radial-gradient(circle at 50% 50%, rgba(79,195,247,0.15) 0%, transparent 70%); border-radius: 16px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 3em; color: var(--accent); }
+    .project-mini-visual::before { content: ""; position: absolute; width: 80%; height: 80%; border: 1px solid rgba(79,195,247,0.2); border-radius: 50%; animation: pulseGlow 3s ease-in-out infinite; }
+    .project-mini-visual::after { content: "Focusa"; position: absolute; bottom: 30px; font-size: 0.4em; letter-spacing: 0.1em; color: var(--text); font-weight: 600; }
+
+    .coming-soon { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .coming-card { background: var(--bg-card); border: 1px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.9em; }
+    .coming-card strong { display: block; color: var(--text); margin-bottom: 4px; font-size: 1em; }
+    .coming-card .badge { display: inline-block; font-size: 0.7em; padding: 2px 10px; background: rgba(245,245,247,0.1); border-radius: 100px; margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .founder-banner { position: relative; width: 100%; aspect-ratio: 16 / 7; border-radius: 20px; overflow: hidden; margin-bottom: 48px; background: linear-gradient(135deg, var(--bg-card), rgba(79,195,247,0.05)); border: 1px solid var(--border); }
+    .founder-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+    .founder-banner::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(180deg, transparent 0%, rgba(13,20,33,0.85) 100%); pointer-events: none; }
+    .founder-banner-overlay { position: absolute; bottom: 32px; left: 32px; z-index: 2; }
+    .founder-banner-overlay .label { color: var(--accent-2); margin-bottom: 8px; }
+    .founder-banner-overlay h3 { font-size: 1.6em; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+
+    .founder-story { max-width: 760px; margin: 60px 0; padding: 48px; background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border); border-left: 3px solid var(--accent); position: relative; }
+    .founder-story::before { content: """; position: absolute; top: 12px; left: 24px; font-size: 4em; color: var(--accent); opacity: 0.3; font-family: Georgia, serif; line-height: 1; }
+    .founder-story-intro { font-size: 1.1em; color: var(--accent); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 24px; }
+    .founder-story p { color: var(--text); font-size: 1.1em; line-height: 1.7; margin-bottom: 20px; }
+    .founder-story p:last-of-type { margin-bottom: 0; }
+    .founder-story em { color: var(--accent); font-style: normal; font-weight: 600; }
+    .founder-story strong { color: var(--text); font-weight: 600; }
+    .founder-story-signature { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.95em; font-style: italic; }
+
+    .founder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .founder-text p { color: var(--text-muted); margin-bottom: 16px; }
+    .founder-text p strong { color: var(--text); }
+    .credentials { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .cred { font-size: 0.8em; padding: 6px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 100px; color: var(--text); }
+    .founder-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; color: var(--accent); text-decoration: none; font-weight: 500; transition: gap 0.2s; }
+    .founder-link:hover { gap: 12px; }
+
+    .beta-cta { background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%); color: var(--bg); padding: 100px 0; text-align: center; }
+    .beta-cta h2 { color: var(--bg); max-width: 720px; margin-left: auto; margin-right: auto; }
+    .beta-cta .section-lead { color: rgba(13,20,33,0.7); margin-left: auto; margin-right: auto; }
+    .beta-cta .label { color: rgba(13,20,33,0.7); }
+    .form-card { background: var(--bg); border-radius: 100px; padding: 8px; display: flex; max-width: 560px; margin: 40px auto 0; border: 1px solid var(--border); }
+    .form-card input { flex: 1; background: transparent; border: none; color: var(--text); padding: 14px 24px; font-size: 1em; outline: none; }
+    .form-card input::placeholder { color: var(--text-muted); }
+    .form-card button { background: linear-gradient(120deg, var(--accent), var(--accent-2)); color: var(--bg); border: none; padding: 14px 28px; border-radius: 100px; font-weight: 600; cursor: pointer; transition: transform 0.2s; }
+    .form-card button:hover { transform: scale(1.02); }
+    .form-note { font-size: 0.85em; color: rgba(13,20,33,0.5); margin-top: 16px; }
+
+    footer { background: #050a14; padding: 60px 0 30px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9em; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+    footer h4 { color: var(--text); font-size: 0.85em; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    footer p { margin-bottom: 12px; }
+    footer a { color: var(--text-muted); text-decoration: none; display: block; padding: 4px 0; transition: color 0.2s; }
+    footer a:hover { color: var(--accent); }
+    .copyright { border-top: 1px solid var(--border); padding-top: 24px; font-size: 0.85em; text-align: center; opacity: 0.6; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero h1 { font-size: 2.4em; }
+      h2 { font-size: 1.8em; }
+      .pulse-visual { max-width: 280px; margin: 0 auto; }
+      .about-nitaii-grid { grid-template-columns: 1fr; gap: 32px; }
+      .project-grid { grid-template-columns: 1fr; gap: 32px; }
+      .project-card { padding: 32px 24px; }
+      .founder-grid { grid-template-columns: 1fr; gap: 32px; }
+      .founder-banner { aspect-ratio: 4 / 3; }
+      .founder-banner-overlay { bottom: 20px; left: 20px; }
+      .founder-banner-overlay h3 { font-size: 1.2em; }
+      .founder-story { padding: 32px 24px; margin: 32px 0; }
+      .founder-story p { font-size: 1em; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      nav ul { display: none; }
+      .lang-switch { display: inline-flex !important; }
+      section { padding: 60px 0; }
+      .philosophy { padding: 70px 0; }
+      .philosophy-headline { font-size: 2em; }
+      .philosophy-body { font-size: 1em; }
+      .philosophy-closer p { font-size: 1.1em; }
+      .form-card { flex-direction: column; border-radius: 16px; }
+      .form-card button { width: 100%; }
+      #educators .container > div { grid-template-columns: 1fr !important; gap: 32px !important; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="top">
+  <div class="container">
+    <a href="#top" class="logo">Nitaii<span class="dot">.</span> <small>Learning Lab</small></a>
+    <ul>
+      <li><a href="#philosophy">Philosophie</a></li>
+      <li><a href="#projects">Projekte</a></li>
+      <li><a href="#educators">Lehrkräfte</a></li>
+      <li><a href="#parents">Eltern</a></li>
+      <li><a href="#founder">Gründerin</a></li>
+      <li><a href="#beta">Beta</a></li>
+      <li class="lang-switch">
+        <a href="index.html">EN</a>
+        <a href="de.html" class="active">DE</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="label">Forschungsbasierte EdTech</span>
+        <h1>
+          Wo Kognition <span class="grad">auf Code trifft.</span>
+        </h1>
+        <p class="lead">
+          Wir sind ein unabhängiges Forschungslabor und entwickeln
+          <strong style="color: var(--text);">Lernwerkzeuge, die den Menschen in den Mittelpunkt stellen</strong>.
+          In einer Welt, die immer schneller in Richtung KI-gesteuerter Bildung rast,
+          nutzen wir biometrische Signale, um den Lernenden im Zentrum zu halten.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">Unsere Arbeit ansehen</a>
+          <a href="#about" class="btn btn-ghost">Über Nitaii</a>
+        </div>
+      </div>
+
+      <div class="pulse-visual">
+        <div class="pulse-circle"></div>
+        <div class="pulse-circle delay-1"></div>
+        <svg class="hrv-svg" viewBox="0 0 400 400" preserveAspectRatio="none">
+          <path class="hrv-path"
+            d="M 0,200 L 80,200 L 100,180 L 120,200 L 140,200 L 150,120 L 160,260 L 170,200 L 200,200 L 220,180 L 240,200 L 260,200 L 270,140 L 280,240 L 290,200 L 320,200 L 340,180 L 360,200 L 400,200" />
+        </svg>
+        <div class="pulse-center"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mission">
+  <div class="container">
+    <div class="mission-grid">
+      <div class="mission-item">
+        <h4>Gegründet</h4>
+        <p>2026 · Yokohama, Japan</p>
+      </div>
+      <div class="mission-item">
+        <h4>Fokus</h4>
+        <p>Biometrisch informiertes Lernen</p>
+      </div>
+      <div class="mission-item">
+        <h4>Methode</h4>
+        <p>Forschung und iteratives Design</p>
+      </div>
+      <div class="mission-item">
+        <h4>Status</h4>
+        <p>1 aktives Projekt, weitere in Forschung</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy" id="philosophy">
+  <div class="container">
+    <span class="label">Unsere Philosophie</span>
+    <h2 class="philosophy-headline">
+      Schüler sind keine <span class="grad">Lernmaschinen.</span>
+    </h2>
+
+    <div class="philosophy-body">
+      <p>
+        Jahrzehntelang wurde uns gesagt, Lernen sei eine Frage des Willens.
+        Setz dich hin. Schlag das Buch auf. Konzentrier dich. Wenn du es nicht
+        kannst, musst du faul sein oder abgelenkt oder du gibst dir einfach
+        nicht genug Mühe.
+      </p>
+      <p>
+        Aber Lernen ist nicht mechanisch. Wenn man lernt, verändert sich die
+        <strong>Herzratenvariabilität</strong>. Die <strong>Atmung verändert sich</strong>.
+        Der Körper reagiert auf Stress, Erschöpfung und kognitive Belastung
+        auf messbare Weise. Lernen ist ein biologischer Akt.
+        Es ist <em>eine Aufnahme, keine Vorstellung.</em>
+      </p>
+      <p>
+        Bei Nitaii Learning Lab entwickeln wir Werkzeuge, die diese Realität
+        respektieren. Werkzeuge, die dem Körper zuhören, bevor sie etwas vom
+        Geist verlangen. Werkzeuge, die zeigen, was wirklich geschieht, damit
+        Lernende und Lehrkräfte endlich den Unterschied erkennen können
+        zwischen <em>"er strengt sich nicht an"</em> und
+        <em>"er ist gerade nicht bereit."</em>
+      </p>
+    </div>
+
+    <div class="philosophy-closer">
+      <p>
+        In einem Zeitalter KI-optimierter Bildung treffen wir eine andere Wahl.
+        <strong>Erst der Mensch. Dann die Technik.</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-nitaii-grid">
+      <div>
+        <span class="label">Über Nitaii</span>
+        <h2>Ein unabhängiges Labor an der Schnittstelle von Bildung, Technologie und Wissenschaft.</h2>
+        <p style="color: var(--text-muted); margin-bottom: 16px;">
+          Nitaii Learning Lab wurde aus einer Überzeugung heraus gegründet.
+          <strong style="color: var(--text);">Lernen ist ein biologischer Prozess</strong>,
+          und digitale Werkzeuge sollten das respektieren.
+        </p>
+        <p style="color: var(--text-muted);">
+          Wir entwickeln keine Apps, die Engagement oder Bildschirmzeit
+          maximieren. Wir gestalten Werkzeuge, die dem Körper und Geist
+          des Lernenden zuhören, objektive Signale sichtbar machen und
+          Menschen helfen, <em>mit</em> ihrer Physiologie zu arbeiten,
+          statt gegen sie.
+        </p>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar">
+          <h4>Forschungsbasiert</h4>
+          <p>Jede Designentscheidung ist in begutachteter kognitiver und physiologischer Forschung verankert.</p>
+        </div>
+        <div class="pillar">
+          <h4>Lernende respektierend</h4>
+          <p>Keine Dark Patterns. Keine Engagement-Fallen. Werkzeuge, die zurücktreten, wenn der Lernende Ruhe braucht.</p>
+        </div>
+        <div class="pillar">
+          <h4>Biometrisch informiert</h4>
+          <p>Wir nutzen validierte Sensoren (HRV, Stress), um unsichtbare Lernmuster sichtbar zu machen.</p>
+        </div>
+        <div class="pillar">
+          <h4>Interdisziplinär</h4>
+          <p>Bildung, Neurowissenschaft, Bibliothekswissenschaft, Linguistik und Softwaredesign, miteinander verwoben.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="projects-section">
+  <div class="container">
+    <span class="label">Unsere Projekte</span>
+    <h2>Woran wir arbeiten.</h2>
+    <p class="section-lead">
+      Das erste Produkt von Nitaii befindet sich in aktiver Entwicklung
+      und im Beta-Test. Weitere Forschungsprojekte sind in früher Erkundungsphase.
+    </p>
+
+    <div class="project-card">
+      <div class="project-grid">
+        <div>
+          <div class="project-meta">
+            <span>01</span>
+            <span>iOS · Gesundheitstechnologie</span>
+            <span>Beta · Aktiv</span>
+          </div>
+          <h3>Focusa. Finde deinen besten Moment zum Lernen.</h3>
+          <p>
+            Eine Lern-App für Prüflinge. Focusa wird mit einem Polar H10
+            Brustgurt verbunden und misst Herzratenvariabilität und Stress
+            in Echtzeit. Die App hilft Studierenden zu erkennen, wann der
+            Geist bereit ist für konzentriertes Lernen, und wann es Zeit
+            zur Erholung ist.
+          </p>
+          <div class="project-tags">
+            <span class="tag">HRV</span>
+            <span class="tag">Polar H10</span>
+            <span class="tag">iOS / Swift</span>
+            <span class="tag">Apple Health</span>
+            <span class="tag">Prüfungsvorbereitung</span>
+          </div>
+          <div class="project-status">
+            <span class="status-dot"></span>
+            Beta-Test mit japanischen Universitätsstudenten
+          </div>
+        </div>
+        <div class="project-mini-visual">♥</div>
+      </div>
+    </div>
+
+    <div class="coming-soon">
+      <div class="coming-card">
+        <strong>The Mirror Framework</strong>
+        Lehrerfortbildung zur Motivationspsychologie. Wie Schüler sich selbst sehen, während sie lernen.
+        <div class="badge">In Entwicklung</div>
+      </div>
+      <div class="coming-card">
+        <strong>Biometrisches Feedback für Lehrkräfte</strong>
+        Hilft Lehrenden zu sehen, wann Schüler bereit sind, und wann sie eine Pause brauchen.
+        <div class="badge">Sondierungsphase</div>
+      </div>
+      <div class="coming-card">
+        <strong>Stress-bewusste Lernumgebungen</strong>
+        Adaptive Inhalte, die auf den autonomen Zustand des Lernenden reagieren.
+        <div class="badge">Konzept</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="educators" style="padding: 100px 0; background: var(--bg);">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+      <div>
+        <span class="label">Für Lehrkräfte</span>
+        <h2 style="margin-bottom: 24px;">Der Spiegel, den wir unseren Lernenden vorhalten.</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.05em;">
+          Wenn Schüler in den Spiegel des Lernens blicken, sehen sie nicht,
+          wer sie sind. Sie sehen die Version von sich selbst, die bereits
+          gelernt hat. Selbstbewusst. Fähig. Im Werden.
+        </p>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.05em;">
+          Lehrkräfte, die das verstehen, müssen ihre Schüler nicht antreiben.
+          Der Spiegel erledigt die Arbeit. Unsere Aufgabe ist es, ihn ruhig zu
+          halten und zu erkennen, wann ein Lernender wegschauen und sich
+          ausruhen muss.
+        </p>
+        <p style="color: var(--text); margin-bottom: 32px; font-size: 1.05em; font-style: italic;">
+          Wir entwickeln The Mirror Framework, ein Fortbildungsprogramm für
+          Lehrkräfte, basierend auf zwanzig Jahren Unterrichtspraxis.
+        </p>
+        <a href="mailto:info@nitaii.eu?subject=Mirror Framework Interesse" class="btn btn-ghost">
+          Interesse bekunden →
+        </a>
+      </div>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; border-left: 3px solid var(--pulse);">
+        <span class="label" style="color: var(--pulse);">Bald verfügbar</span>
+        <h3 style="font-size: 1.5em; margin-bottom: 16px; color: var(--text);">The Mirror Framework</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">
+          Ein Lehrerfortbildungsprogramm, fundiert in der Motivationspsychologie
+          und 20 Jahren internationaler Unterrichtspraxis.
+        </p>
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: var(--text-muted); font-size: 0.95em;">
+            <span style="color: var(--accent);">→</span> Motivation der Lernenden verstehen
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: var(--text-muted); font-size: 0.95em;">
+            <span style="color: var(--accent);">→</span> Den Körper lesen, nicht nur die Arbeit
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: var(--text-muted); font-size: 0.95em;">
+            <span style="color: var(--accent);">→</span> Praktische Reflexionstechniken
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; color: var(--text-muted); font-size: 0.95em;">
+            <span style="color: var(--accent);">→</span> Stress-bewusste Klassenraumgestaltung
+          </div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.85em; padding-top: 16px; border-top: 1px solid var(--border);">
+          Für Schulen, Lehrerausbilder und Pädagogen weltweit.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="parents" style="padding: 100px 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div style="max-width: 720px; margin: 0 auto; text-align: center;">
+      <span class="label" style="color: var(--pulse);">Für Eltern · Bald verfügbar</span>
+      <h2 style="margin-bottom: 24px;">"Streng dich mehr an" ist oft der falsche Rat.</h2>
+      <p style="color: var(--text-muted); font-size: 1.1em; margin-bottom: 20px;">
+        Ihr Kind ist nicht faul. Es ist vielleicht einfach noch nicht bereit.
+        Die meisten von uns wurden mit der Idee erzogen, dass Lernen eine
+        Frage des Willens ist. Hinsetzen. Buch aufschlagen. Konzentrieren.
+        Aber Körper und Geist sind nicht immer einer Meinung.
+      </p>
+      <p style="color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px;">
+        Wir bereiten einen kostenlosen Newsletter für Eltern vor, die die
+        Wissenschaft hinter der Motivation ihres Kindes verstehen möchten.
+        Keine schnellen Lösungen. Keine Schuldgefühle. Nur echte Einsichten,
+        geschrieben von jemandem, der zwanzig Jahre unterrichtet hat.
+      </p>
+
+      <form action="https://formspree.io/f/your-form-id-parents-de" method="POST">
+        <div style="display: flex; gap: 12px; max-width: 480px; margin: 0 auto; background: var(--bg); padding: 8px; border-radius: 100px; border: 1px solid var(--border);">
+          <input type="email" name="email" placeholder="ihre.email@beispiel.de" required
+            style="flex: 1; background: transparent; border: none; color: var(--text); padding: 14px 24px; font-size: 1em; outline: none;">
+          <button type="submit"
+            style="background: var(--pulse); color: white; border: none; padding: 14px 24px; border-radius: 100px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+            Benachrichtigen
+          </button>
+        </div>
+        <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 16px;">
+          Wir informieren Sie, sobald die erste Ausgabe bereit ist. Kein Spam.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="founder">
+  <div class="container">
+    <span class="label">Gründerin</span>
+    <h2 style="margin-bottom: 16px;">Dr. Gabriella Nishizawa</h2>
+    <p class="section-lead" style="margin-bottom: 40px;">PhD · Internationale Pädagogin · EdTech-Forscherin · Yokohama, Japan</p>
+
+    <div class="founder-banner">
+      <img src="founder.png" alt="Dr. Gabriella Nishizawa, Gründerin von Nitaii Learning Lab">
+      <div class="founder-banner-overlay">
+        <span class="label">20+ Jahre internationale Bildungserfahrung</span>
+        <h3>Wo Forschung auf Design trifft.</h3>
+      </div>
+    </div>
+
+    <div class="founder-story">
+      <p class="founder-story-intro">Zwanzig Jahre Unterricht haben mich eines gelehrt.</p>
+      <p>
+        Schüler lieben nicht die Fächer, die wir ihnen beibringen. Sie lieben
+        <em>die Version von sich selbst, die sie beim Lernen sehen.</em>
+      </p>
+      <p>
+        Ich habe jahrelang einen Spiegel hochgehalten, ohne es zu merken.
+        Jedes Mal, wenn meine Schüler einen Blick auf das werfen konnten,
+        was aus ihnen wurde, wollten sie mehr sehen. Dieser Hunger trieb
+        das Lernen, nicht der Stoff.
+      </p>
+      <p>
+        Nitaii Learning Lab ist aus dieser Erkenntnis entstanden. Lernen ist
+        nicht das Aufnehmen von Inhalten. Es ist das <strong>Werden eines Selbst</strong>.
+      </p>
+      <p>
+        Und kein echtes Werden geschieht, wenn der Körper erschöpft, gestresst
+        oder ungehört ist. Deshalb messen wir den Körper, bevor wir etwas vom
+        Geist verlangen.
+      </p>
+      <p class="founder-story-signature">Dr. Gabriella Nishizawa, Gründerin</p>
+    </div>
+
+    <div class="founder-grid">
+      <div class="founder-text">
+        <p>
+          Nitaii Learning Lab wurde von <strong style="color: var(--text);">Dr. Gabriella Nishizawa</strong>
+          gegründet, einer internationalen Pädagogin und Forscherin mit über
+          20 Jahren Erfahrung in Ungarn, Deutschland und Japan.
+        </p>
+        <p>
+          Mit einem interdisziplinären akademischen Hintergrund in Linguistik,
+          Informatik-Didaktik und Bibliotheks- und Informationswissenschaft
+          arbeitet Gabriella an der Schnittstelle dessen, wie Menschen lernen
+          und wie digitale Werkzeuge diesen Prozess unterstützen oder
+          untergraben können.
+        </p>
+        <a href="https://nishizawag.com" class="founder-link" target="_blank">
+          Portfolio der Gründerin besuchen →
+        </a>
+      </div>
+
+      <div>
+        <h4 style="font-size: 0.85em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; font-weight: 600;">Qualifikationen &amp; Rollen</h4>
+        <div class="credentials">
+          <span class="cred">PhD Linguistik</span>
+          <span class="cred">MSc Informatik-Didaktik</span>
+          <span class="cred">BA Bibliotheks- und Informationswissenschaft</span>
+          <span class="cred">iOS-Entwicklerin</span>
+          <span class="cred">Internationale Prüferin</span>
+          <span class="cred">Yokohama Local Hire</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="beta-cta" id="beta">
+  <div class="container">
+    <span class="label">Focusa Beta · In Entwicklung</span>
+    <h2>Gehören Sie zu den Ersten, die unsere Forschung in Aktion testen.</h2>
+    <p class="section-lead">
+      Wir öffnen den frühen Zugang zu Focusa, unserem biometrisch informierten
+      Lernbegleiter. Hinterlassen Sie Ihre E-Mail-Adresse, und wir melden uns,
+      sobald Beta-Plätze frei werden.
+    </p>
+
+    <form action="https://formspree.io/f/your-form-id-de" method="POST">
+      <div class="form-card">
+        <input type="email" name="email" placeholder="ihre.email@beispiel.de" required>
+        <button type="submit">Beta-Zugang anfordern</button>
+      </div>
+      <p class="form-note">
+        Wir verwenden Ihre E-Mail-Adresse ausschließlich, um Sie über den
+        Focusa Beta-Zugang zu informieren. Kein Spam.
+      </p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#top" class="logo" style="margin-bottom: 16px; display: inline-block;">Nitaii<span class="dot">.</span> <small>Learning Lab</small></a>
+        <p>Unabhängiges EdTech-Forschungslabor.</p>
+        <p>Yokohama, Japan · Gegründet 2026</p>
+      </div>
+      <div>
+        <h4>Labor</h4>
+        <a href="#about">Über Nitaii</a>
+        <a href="#projects">Projekte</a>
+        <a href="#founder">Gründerin</a>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <a href="mailto:info@nitaii.eu">info@nitaii.eu</a>
+        <a href="https://nishizawag.com" target="_blank">Portfolio der Gründerin</a>
+        <a href="#beta">Focusa Beta</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 Nitaii Learning Lab · Alle Rechte vorbehalten.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
