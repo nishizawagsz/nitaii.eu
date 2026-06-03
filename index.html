@@ -195,12 +195,37 @@
     }
     .btn-ghost:hover { background: var(--bg-card); }
 
-    /* HRV Pulse Visual */
-    .pulse-visual {
+    /* Hero blob image — amoeba shape */
+    .hero-blob {
       position: relative;
-      aspect-ratio: 1 / 1;
-      max-width: 380px;
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1;
       margin-left: auto;
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--pulse) 100%);
+      overflow: hidden;
+      animation: blobMorph 12s ease-in-out infinite;
+      box-shadow: 0 30px 80px rgba(79,195,247,0.3);
+    }
+    .hero-blob img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    @keyframes blobMorph {
+      0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      33% { border-radius: 30% 70% 70% 30% / 30% 60% 40% 70%; }
+      66% { border-radius: 70% 30% 50% 50% / 50% 60% 40% 50%; }
+    }
+    /* Pulsating heart for Focusa visual */
+    .focusa-pulse {
+      position: relative;
+      aspect-ratio: 1;
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
     }
     .pulse-circle {
       position: absolute;
@@ -217,52 +242,40 @@
       0%, 100% { transform: scale(0.95); opacity: 0.7; }
       50% { transform: scale(1.05); opacity: 1; }
     }
-    .hrv-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .hrv-path {
-      fill: none;
-      stroke: var(--accent-2);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      filter: drop-shadow(0 0 8px var(--accent-2));
-      stroke-dasharray: 1200;
-      stroke-dashoffset: 1200;
-      animation: drawLine 4s ease-in-out infinite;
-    }
-    @keyframes drawLine {
-      0% { stroke-dashoffset: 1200; opacity: 0; }
-      40% { stroke-dashoffset: 0; opacity: 1; }
-      90% { stroke-dashoffset: 0; opacity: 1; }
-      100% { stroke-dashoffset: -1200; opacity: 0; }
-    }
     .pulse-center {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       background: var(--pulse);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 40px var(--pulse);
+      box-shadow: 0 0 50px var(--pulse);
       animation: heartbeat 1.2s ease-in-out infinite;
     }
     .pulse-center::after {
       content: "♥";
       color: white;
-      font-size: 2em;
+      font-size: 2.5em;
     }
     @keyframes heartbeat {
       0%, 100% { transform: translate(-50%, -50%) scale(1); }
       50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+    .focusa-label {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      font-size: 0.85em;
+      text-transform: uppercase;
     }
 
     /* Mission strip */
@@ -375,6 +388,114 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 700;
+    }
+    /* Philosophy decorative SVG */
+    .philosophy-deco {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 320px;
+      height: 320px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .philosophy-deco svg {
+      width: 100%;
+      height: 100%;
+    }
+    .philosophy-deco-line {
+      fill: none;
+      stroke: var(--accent-2);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 12px var(--accent));
+    }
+    .deco-pulse-1 {
+      stroke-dasharray: 800;
+      stroke-dashoffset: 800;
+      animation: drawPulse 6s ease-in-out infinite;
+    }
+    .deco-pulse-2 {
+      stroke-dasharray: 800;
+      stroke-dashoffset: 800;
+      animation: drawPulse 6s ease-in-out infinite 2s;
+      stroke: var(--pulse);
+    }
+    @keyframes drawPulse {
+      0% { stroke-dashoffset: 800; opacity: 0; }
+      40% { stroke-dashoffset: 0; opacity: 0.8; }
+      90% { stroke-dashoffset: 0; opacity: 0.8; }
+      100% { stroke-dashoffset: -800; opacity: 0; }
+    }
+
+    /* Hand mirror SVG for Educators */
+    .mirror-visual {
+      position: relative;
+      width: 100%;
+      max-width: 170px;
+      aspect-ratio: 5 / 7;
+      margin: 0 auto 28px;
+    }
+    .mirror-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 8px 24px rgba(79,195,247,0.3));
+    }
+    .mirror-shimmer-1 {
+      transform-origin: 78px 75px;
+      animation: shimmer 5s ease-in-out infinite;
+    }
+    .mirror-shimmer-2 {
+      transform-origin: 74px 68px;
+      animation: shimmer 5s ease-in-out infinite 1s;
+    }
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+
+    /* Parents visual — photo with morphing blob frame */
+    .parents-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .parents-visual {
+      position: relative;
+      aspect-ratio: 1;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+    .parents-blob-bg {
+      position: absolute;
+      inset: -8%;
+      border-radius: 70% 30% 50% 50% / 50% 50% 70% 30%;
+      background: linear-gradient(135deg, var(--pulse) 0%, var(--accent) 100%);
+      opacity: 0.18;
+      animation: blobMorph 14s ease-in-out infinite;
+      filter: blur(20px);
+    }
+    .parents-photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(255,94,126,0.25);
+      animation: blobMorph 16s ease-in-out infinite;
+      background: linear-gradient(135deg, rgba(79,195,247,0.15), rgba(255,94,126,0.15));
+    }
+    .parents-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85) contrast(1.05);
     }
 
     h2 {
@@ -521,32 +642,10 @@
     }
     .project-mini-visual {
       aspect-ratio: 1;
-      background: radial-gradient(circle at 50% 50%, rgba(79,195,247,0.15) 0%, transparent 70%);
-      border-radius: 16px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3em;
-      color: var(--accent);
-    }
-    .project-mini-visual::before {
-      content: "";
-      position: absolute;
-      width: 80%;
-      height: 80%;
-      border: 1px solid rgba(79,195,247,0.2);
-      border-radius: 50%;
-      animation: pulseGlow 3s ease-in-out infinite;
-    }
-    .project-mini-visual::after {
-      content: "Focusa";
-      position: absolute;
-      bottom: 30px;
-      font-size: 0.4em;
-      letter-spacing: 0.1em;
-      color: var(--text);
-      font-weight: 600;
     }
 
     /* Coming soon mini cards */
@@ -843,7 +942,8 @@
       .hero-grid { grid-template-columns: 1fr; gap: 40px; }
       .hero h1 { font-size: 2.4em; }
       h2 { font-size: 1.8em; }
-      .pulse-visual { max-width: 280px; margin: 0 auto; }
+      .hero-blob { max-width: 280px; margin: 0 auto; }
+      .focusa-pulse { max-width: 200px; }
       .about-nitaii-grid { grid-template-columns: 1fr; gap: 32px; }
       .project-grid { grid-template-columns: 1fr; gap: 32px; }
       .project-card { padding: 32px 24px; }
@@ -870,7 +970,7 @@
 
 <nav id="top">
   <div class="container">
-    <a href="#top" class="logo">Nitaii<span class="dot">.</span> <small>Learning Lab</small></a>
+    <a href="#" class="logo" onclick="event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});">Nitaii<span class="dot">.</span> <small>Learning Lab</small></a>
     <ul>
       <li><a href="#philosophy">Philosophy</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -905,14 +1005,9 @@
         </div>
       </div>
 
-      <div class="pulse-visual">
-        <div class="pulse-circle"></div>
-        <div class="pulse-circle delay-1"></div>
-        <svg class="hrv-svg" viewBox="0 0 400 400" preserveAspectRatio="none">
-          <path class="hrv-path"
-            d="M 0,200 L 80,200 L 100,180 L 120,200 L 140,200 L 150,120 L 160,260 L 170,200 L 200,200 L 220,180 L 240,200 L 260,200 L 270,140 L 280,240 L 290,200 L 320,200 L 340,180 L 360,200 L 400,200" />
-        </svg>
-        <div class="pulse-center"></div>
+      <div class="hero-blob">
+        <!-- Save your hero image as 'hero.jpg' or 'hero.png' in this folder -->
+        <img src="hero.jpg" alt="Nitaii Learning Lab" onerror="this.style.display='none'">
       </div>
     </div>
   </div>
@@ -942,6 +1037,16 @@
 </section>
 
 <section class="philosophy" id="philosophy">
+  <div class="philosophy-deco">
+    <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+      <path class="philosophy-deco-line deco-pulse-1"
+        d="M 20,160 Q 60,160 80,160 L 100,140 L 110,180 L 120,100 L 130,220 L 140,160 L 160,160 Q 200,160 220,160 L 240,140 L 250,180 L 260,120 L 270,200 L 280,160 L 300,160" />
+      <path class="philosophy-deco-line deco-pulse-2"
+        d="M 20,200 Q 80,180 120,200 T 220,200 T 300,200" />
+      <circle cx="160" cy="160" r="80" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.2" />
+      <circle cx="160" cy="160" r="50" fill="none" stroke="var(--accent-2)" stroke-width="1" opacity="0.3" />
+    </svg>
+  </div>
   <div class="container">
     <span class="label">Our Philosophy</span>
     <h2 class="philosophy-headline">
@@ -1054,7 +1159,14 @@
             Beta testing with Japanese university students
           </div>
         </div>
-        <div class="project-mini-visual">♥</div>
+        <div class="project-mini-visual">
+          <div class="focusa-pulse">
+            <div class="pulse-circle"></div>
+            <div class="pulse-circle delay-1"></div>
+            <div class="pulse-center"></div>
+            <span class="focusa-label">Focusa</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1104,6 +1216,54 @@
       </div>
 
       <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; border-left: 3px solid var(--pulse);">
+        <div class="mirror-visual">
+          <svg class="mirror-svg" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="frameGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#00e5ff" stop-opacity="0.55"/>
+              </linearGradient>
+              <radialGradient id="mirrorGrad" cx="0.35" cy="0.3">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+                <stop offset="55%" stop-color="rgba(0,229,255,0.08)"/>
+                <stop offset="100%" stop-color="rgba(13,20,33,0.95)"/>
+              </radialGradient>
+              <linearGradient id="handleGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="rgba(79,195,247,0.18)"/>
+                <stop offset="50%" stop-color="rgba(79,195,247,0.55)"/>
+                <stop offset="100%" stop-color="rgba(79,195,247,0.18)"/>
+              </linearGradient>
+            </defs>
+            <!-- Top crown ornament -->
+            <path d="M 92 16 Q 100 4 108 16" fill="none" stroke="#4fc3f7" stroke-width="1.5" opacity="0.7"/>
+            <circle cx="100" cy="9" r="3.5" fill="#00e5ff" opacity="0.85"/>
+            <!-- Outer ornate frame -->
+            <ellipse cx="100" cy="108" rx="86" ry="96" fill="none" stroke="url(#frameGrad)" stroke-width="3"/>
+            <!-- Inner decorative ring -->
+            <ellipse cx="100" cy="108" rx="78" ry="88" fill="none" stroke="rgba(0,229,255,0.4)" stroke-width="1"/>
+            <!-- Tiny ornament dots around frame -->
+            <circle cx="100" cy="14" r="1.5" fill="#00e5ff" opacity="0.6"/>
+            <circle cx="100" cy="202" r="1.5" fill="#00e5ff" opacity="0.6"/>
+            <circle cx="16" cy="108" r="1.5" fill="#00e5ff" opacity="0.6"/>
+            <circle cx="184" cy="108" r="1.5" fill="#00e5ff" opacity="0.6"/>
+            <!-- Mirror glass -->
+            <ellipse cx="100" cy="108" rx="72" ry="82" fill="url(#mirrorGrad)"/>
+            <!-- Soft reflection highlights -->
+            <ellipse class="mirror-shimmer-1" cx="78" cy="75" rx="22" ry="32" fill="rgba(255,255,255,0.12)"/>
+            <ellipse class="mirror-shimmer-2" cx="74" cy="68" rx="9" ry="15" fill="rgba(255,255,255,0.22)"/>
+            <!-- Handle connector base -->
+            <path d="M 86 195 Q 100 215 114 195" fill="none" stroke="url(#frameGrad)" stroke-width="2.5"/>
+            <ellipse cx="100" cy="208" rx="14" ry="5" fill="url(#handleGrad)" stroke="rgba(79,195,247,0.5)" stroke-width="1"/>
+            <!-- Handle shaft -->
+            <rect x="93" y="210" width="14" height="58" rx="3" fill="url(#handleGrad)" stroke="rgba(79,195,247,0.5)" stroke-width="1"/>
+            <!-- Handle decoration rings -->
+            <line x1="91" y1="224" x2="109" y2="224" stroke="rgba(0,229,255,0.55)" stroke-width="1"/>
+            <line x1="91" y1="254" x2="109" y2="254" stroke="rgba(0,229,255,0.55)" stroke-width="1"/>
+            <circle cx="100" cy="239" r="2.5" fill="#00e5ff" opacity="0.75"/>
+            <!-- Handle bottom cap -->
+            <ellipse cx="100" cy="270" rx="9" ry="3" fill="url(#frameGrad)"/>
+          </svg>
+        </div>
         <span class="label" style="color: var(--pulse);">Coming Soon</span>
         <h3 style="font-size: 1.5em; margin-bottom: 16px; color: var(--text);">The Mirror Framework</h3>
         <p style="color: var(--text-muted); margin-bottom: 24px;">
@@ -1134,33 +1294,44 @@
 
 <section id="parents" style="padding: 100px 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
-    <div style="max-width: 720px; margin: 0 auto; text-align: center;">
-      <span class="label" style="color: var(--pulse);">For Parents · Coming Soon</span>
-      <h2 style="margin-bottom: 24px;">"Try harder" is often the wrong advice.</h2>
-      <p style="color: var(--text-muted); font-size: 1.1em; margin-bottom: 20px;">
-        Your child isn't lazy. They might not be ready. Most of us were raised on
-        the idea that learning is a matter of will. Sit down. Open the book. Focus.
-        But the body and mind don't always agree.
-      </p>
-      <p style="color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px;">
-        We're putting together a free newsletter for parents who want to understand
-        the science behind their child's motivation. No quick fixes. No guilt.
-        Just real insight, written by someone who taught for twenty years.
-      </p>
-
-      <form action="https://formspree.io/f/your-form-id-parents" method="POST">
-        <div style="display: flex; gap: 12px; max-width: 480px; margin: 0 auto; background: var(--bg); padding: 8px; border-radius: 100px; border: 1px solid var(--border);">
-          <input type="email" name="email" placeholder="your.email@example.com" required
-            style="flex: 1; background: transparent; border: none; color: var(--text); padding: 14px 24px; font-size: 1em; outline: none;">
-          <button type="submit"
-            style="background: var(--pulse); color: white; border: none; padding: 14px 24px; border-radius: 100px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
-            Notify me
-          </button>
+    <div class="parents-grid">
+      <div class="parents-visual">
+        <div class="parents-blob-bg"></div>
+        <div class="parents-photo">
+          <!-- Save your chosen Unsplash image as 'parents.jpg' in this folder -->
+          <img src="parents.jpg" alt="A parent and child in a quiet learning moment"
+               onerror="this.style.display='none'">
         </div>
-        <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 16px;">
-          We'll let you know when the first issue is ready. No spam.
+      </div>
+
+      <div>
+        <span class="label" style="color: var(--pulse);">For Parents · Coming Soon</span>
+        <h2 style="margin-bottom: 24px;">"Try harder" is often the wrong advice.</h2>
+        <p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 20px;">
+          Your child isn't lazy. They might not be ready. Most of us were raised
+          on the idea that learning is a matter of will. Sit down. Open the book.
+          Focus. But the body and mind don't always agree.
         </p>
-      </form>
+        <p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 32px;">
+          We're putting together a free newsletter for parents who want to understand
+          the science behind their child's motivation. No quick fixes. No guilt.
+          Just real insight, written by someone who taught for twenty years.
+        </p>
+
+        <form action="https://formspree.io/f/your-form-id-parents" method="POST">
+          <div style="display: flex; gap: 12px; background: var(--bg); padding: 8px; border-radius: 100px; border: 1px solid var(--border);">
+            <input type="email" name="email" placeholder="your.email@example.com" required
+              style="flex: 1; background: transparent; border: none; color: var(--text); padding: 14px 24px; font-size: 1em; outline: none;">
+            <button type="submit"
+              style="background: var(--pulse); color: white; border: none; padding: 14px 24px; border-radius: 100px; font-weight: 600; cursor: pointer; transition: transform 0.2s;">
+              Notify me
+            </button>
+          </div>
+          <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 16px;">
+            We'll let you know when the first issue is ready. No spam.
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -1261,7 +1432,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a href="#top" class="logo" style="margin-bottom: 16px; display: inline-block;">Nitaii<span class="dot">.</span> <small>Learning Lab</small></a>
+        <a href="#" class="logo" style="margin-bottom: 16px; display: inline-block;" onclick="event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});">Nitaii<span class="dot">.</span> <small>Learning Lab</small></a>
         <p>Independent EdTech research lab.</p>
         <p>Yokohama, Japan · Founded 2026</p>
       </div>
