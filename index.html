@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="Nitaii Learning Lab. A research-driven EdTech lab in Yokohama, building biometric-informed learning tools. Founded by Dr. Gabriella Nishizawa." name="description"/>
+<meta content="Nitaii Learning Lab. A research-informed EdTech lab in Yokohama, building biometric-informed learning tools. Founded by Dr. Gabriella S. Nishizawa." name="description"/>
 <title>Nitaii Learning Lab. Where Cognition Meets Code.</title>
 <style>
     :root {
@@ -979,7 +979,185 @@
         max-width: 420px;
       }
     }
-    </style>
+    
+
+    /* Educators section image */
+    #educators .educators-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    #educators .educators-visual {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      aspect-ratio: 1;
+    }
+    #educators .educators-photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 63% 37% 55% 45% / 44% 58% 42% 56%;
+      animation: morph 14s ease-in-out infinite;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+      background: var(--bg-card);
+    }
+    #educators .educators-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #educators .educators-blob-bg {
+      position: absolute;
+      inset: -12%;
+      background: radial-gradient(circle at 30% 30%, rgba(107,180,255,0.22), rgba(107,180,255,0.08) 45%, transparent 70%);
+      border-radius: 50%;
+      animation: pulse 6s ease-in-out infinite;
+      z-index: 0;
+      filter: blur(1px);
+    }
+    #educators .educators-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+    @media (max-width: 900px) {
+      #educators .educators-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      #educators .educators-visual {
+        max-width: 420px;
+        order: -1;
+      }
+    }
+
+
+    /* About Nitaii image */
+    .about-nitaii-grid {
+      align-items: center;
+    }
+    .about-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .about-copy > div:first-child {
+      display: block;
+    }
+    .about-visual {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      aspect-ratio: 1;
+    }
+    .about-photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 58% 42% 46% 54% / 42% 55% 45% 58%;
+      animation: morph 18s ease-in-out infinite;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+      background: var(--bg-card);
+      z-index: 1;
+    }
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-blob-bg {
+      position: absolute;
+      inset: -12%;
+      background: radial-gradient(circle at 30% 30%, rgba(107,180,255,0.22), rgba(107,180,255,0.08) 45%, transparent 70%);
+      border-radius: 50%;
+      animation: pulse 7s ease-in-out infinite;
+      z-index: 0;
+      filter: blur(1px);
+    }
+    @media (max-width: 900px) {
+      .about-nitaii-grid {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+      }
+      .about-visual {
+        max-width: 420px;
+      }
+    }
+
+
+    /* RALL project visual */
+    .rall-visual {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rall-robot {
+      width: 116px;
+      height: 86px;
+      border: 2px solid var(--accent);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-2);
+      font-size: 1.3em;
+      letter-spacing: 8px;
+      background: rgba(79,195,247,0.06);
+      box-shadow: 0 0 36px rgba(79,195,247,0.12);
+      position: relative;
+    }
+    .rall-robot::before {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 24px;
+      background: var(--accent);
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .rall-robot::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 14px var(--accent-2);
+    }
+    .rall-bubble {
+      position: absolute;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 0.9em;
+    }
+    .rall-bubble-a {
+      top: 18px;
+      left: 0;
+    }
+    .rall-bubble-b {
+      right: 0;
+      bottom: 22px;
+    }
+</style>
 </head>
 <body>
 <nav id="top">
@@ -1003,7 +1181,7 @@
 <div class="container">
 <div class="hero-grid">
 <div>
-<span class="label">Research-Driven EdTech</span>
+<span class="label">Research-Informed EdTech</span>
 <h1>
           Where cognition <span class="grad">meets code.</span>
 </h1>
@@ -1060,27 +1238,7 @@
 <h2 class="philosophy-headline">
       Students are not <span class="grad">learning machines.</span>
 </h2>
-<div class="philosophy-body">
-<p>
-        For decades we've been told that learning is a matter of will.
-        Just sit down. Open the book. Focus. If you can't do it, you must
-        be lazy or distracted or not trying hard enough.
-      </p>
-<p>
-        But learning isn't mechanical. When you study, your <strong>heart
-        rate variability shifts</strong>. Your <strong>breathing changes</strong>.
-        Your body responds to stress, fatigue, and how hard you're thinking,
-        in ways you can actually measure. Learning is a biological act.
-        It is <em>a reception, not a performance.</em>
-</p>
-<p>
-        At Nitaii Learning Lab we build tools that respect this reality.
-        Tools that listen to the body before they ask anything of the mind.
-        Tools that show what's really happening, so learners and educators
-        can finally tell the difference between <em>"not trying"</em> and
-        <em>"not ready."</em>
-</p>
-</div>
+<div class="philosophy-body"><p>Learning is not simply a matter of effort. Concentration can be affected by fatigue, stress, timing, prior knowledge and the learning environment.</p><p>Some of these changes are accompanied by physiological signals such as <strong>heart rate and heart-rate variability</strong>. These signals do not explain learning on their own, but they can add another source of information alongside what learners and educators already observe.</p><p>At Nitaii Learning Lab, we explore how digital tools and physiological data might support reflection on <em>focus, stress and readiness</em> without replacing human judgement. The aim is to test what is useful in practice, and to be equally clear about what the data cannot tell us.</p></div>
 <div class="philosophy-closer">
 <p>
         In an age of AI-optimised education, we make a different choice.
@@ -1091,64 +1249,46 @@
 </section>
 <section id="about">
 <div class="container">
-<div class="about-nitaii-grid">
-<div>
+<div class="about-nitaii-grid"><div class="about-copy"><div>
 <span class="label">About Nitaii</span>
 <h2>An independent lab at the intersection of education, technology, and science.</h2>
-<p style="color: var(--text-muted); margin-bottom: 16px;">
-          Nitaii Learning Lab was founded on one conviction.
-          <strong style="color: var(--text);">Learning is a biological process</strong>,
-          and digital tools should respect that.
-        </p>
-<p style="color: var(--text-muted);">
-          We don't build apps to maximise engagement or screen time. We design tools
-          that listen to the learner's body and mind, surface objective signals,
-          and help people work <em>with</em> their physiology rather than against it.
-        </p>
-</div>
-<div class="pillars">
+<p style="color: var(--text-muted); margin-bottom: 16px;">Nitaii Learning Lab starts from a simple idea: <strong style="color: var(--text);">learning involves both mind and body</strong>, and digital tools should be designed with that in mind.</p>
+<p style="color: var(--text-muted);">We develop and test learning-support tools and small educational pilots. Rather than treating data as an answer, we use it as one input among many and look at what is actually useful for learners and educators.</p>
+</div><div class="pillars">
 <div class="pillar">
-<h4>Research-grounded</h4>
-<p>Every design choice is anchored in peer-reviewed cognitive and physiological research.</p>
+<h4>Research-informed</h4>
+<p>Where relevant, our work draws on published research in learning, cognition and physiology.</p>
 </div>
 <div class="pillar">
 <h4>Learner-respecting</h4>
-<p>No dark patterns. No engagement traps. Tools that step back when the learner needs rest.</p>
+<p>No engagement traps or unnecessary pressure. The goal is to support learning without demanding more attention than the task itself.</p>
 </div>
 <div class="pillar">
 <h4>Biometric-informed</h4>
-<p>Using validated sensors (HRV, stress) to bring invisible learning patterns into view.</p>
+<p>Exploring heart-rate and HRV data as additional signals for reflection on learning, focus and wellbeing.</p>
 </div>
 <div class="pillar">
 <h4>Cross-disciplinary</h4>
-<p>Education, neuroscience, library science, linguistics, and software design, woven together.</p>
+<p>Education, computer science, library and information science, linguistics and software design.</p>
 </div>
-</div>
-</div>
+</div></div><div class="about-visual"><div class="about-blob-bg"></div><div class="about-photo"><img alt="Nitaii learning lab materials, notes, prototype sketches and tools" src="about.png"/></div></div></div>
 </div>
 </section>
 <section class="projects-section" id="projects">
 <div class="container">
 <span class="label">Our Projects</span>
 <h2>What we're building.</h2>
-<p class="section-lead">
-      Nitaii's first product is currently in active development and beta testing.
-      More research projects are in early exploration.
-    </p>
+<p class="section-lead">Nitaii currently has one active product in development and a second project in exploratory pilot design.</p>
 <div class="project-card">
 <div class="project-grid">
 <div>
 <div class="project-meta">
 <span>01</span>
-<span>iOS · Health Technology</span>
+<span>Learning Support · Student Wellbeing</span>
 <span>Beta · Active</span>
 </div>
 <h3>Focusa. Find your best moment to study.</h3>
-<p>
-            A learning app for exam-takers. Focusa pairs with a Polar H10 chest strap
-            to read heart-rate variability and stress in real time. It helps students
-            see when their mind is ready for focused study, and when it's time to rest.
-          </p>
+<p>A learning-support app for students. Focusa uses heart-rate and HRV data from a Polar H10 to explore patterns related to concentration, stress and self-regulation during study. The aim is to help learners reflect on when different study conditions work well for them.</p>
 <div class="project-tags">
 <span class="tag">HRV</span>
 <span class="tag">Polar H10</span>
@@ -1170,42 +1310,11 @@
 </div>
 </div>
 </div>
-</div>
-<div class="coming-soon">
-<div class="coming-card">
-<strong>Biometric feedback for teachers</strong>
-        Helping educators see when students are ready, and when they need to rest.
-        <div class="badge">Exploratory</div>
-</div>
-<div class="coming-card">
-<strong>Stress-aware learning environments</strong>
-        Adaptive content that responds to the learner's autonomic state.
-        <div class="badge">Concept</div>
-</div>
-</div>
+</div><div class="project-card"><div class="project-grid"><div><div class="project-meta"><span>02</span><span>Robot-Assisted Language Learning</span><span>Exploratory · Pilot Design</span></div><h3>Robot-Assisted Language Learning for Hungarian in Diaspora Communities</h3><p>An exploratory project looking at how educational and social robots could support Hungarian language practice for children growing up outside Hungary. The first phase will focus on small-scale activities for spoken interaction, vocabulary and simple task-based language practice.</p><div class="project-tags"><span class="tag">RALL</span><span class="tag">Hungarian</span><span class="tag">Educational Robotics</span><span class="tag">Language Education</span><span class="tag">Diaspora Education</span></div><div class="project-status"><span class="status-dot"></span> Exploratory project · classroom pilot in design</div></div><div class="project-mini-visual"><div class="rall-visual"><div class="rall-bubble rall-bubble-a">Szia!</div><div class="rall-robot">◉  ◉</div><div class="rall-bubble rall-bubble-b">Beszéljünk.</div></div></div></div></div>
 </div>
 </section>
 <section id="educators" style="padding: 100px 0; background: var(--bg);">
-<div class="container">
-<div style="max-width: 760px;">
-<span class="label">For Educators</span>
-<h2 style="margin-bottom: 24px;">Small pilots. Real classrooms.</h2>
-<p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.05em;">
-        Nitaii is interested in working with educators on small-scale pilots that test
-        how digital tools can support learning in practice. The aim is to observe what
-        helps, what does not, and how technology can be introduced without adding
-        unnecessary complexity.
-      </p>
-<p style="color: var(--text-muted); margin-bottom: 32px; font-size: 1.05em;">
-        Current areas of interest include learning support, self-regulation, and
-        Robot-Assisted Language Learning (RALL). These are exploratory projects,
-        developed through practical testing rather than presented as finished teaching models.
-      </p>
-<a class="btn btn-ghost" href="mailto:info@nitaii.eu?subject=Educator pilot collaboration">
-        Discuss a pilot →
-      </a>
-</div>
-</div>
+<div class="container"><div class="educators-grid"><div class="educators-visual"><div class="educators-blob-bg"></div><div class="educators-photo"><img alt="Teacher and students working together with a small educational robot" src="educators.png"/></div></div><div class="educators-content"><span class="label">For Educators</span><h2 style="margin-bottom: 24px;">Small pilots. Real classrooms.</h2><p style="color: var(--text-muted); margin-bottom: 20px; font-size: 1.05em;">Nitaii is interested in working with educators on small-scale pilots that test how digital tools can support learning in practice. The aim is to observe what helps, what does not, and how technology can be introduced without adding unnecessary complexity.</p><p style="color: var(--text-muted); margin-bottom: 32px; font-size: 1.05em;">Current areas of interest include learning support, self-regulation, and Robot-Assisted Language Learning (RALL). These are exploratory projects, developed through practical testing rather than presented as finished teaching models.</p><a class="btn btn-ghost" href="mailto:info@nitaii.eu?subject=Educator pilot collaboration">Discuss a pilot →</a></div></div></div>
 </section>
 <section id="parents" style="padding: 100px 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
 <div class="container">
@@ -1213,17 +1322,9 @@
 <div class="parents-visual"><div class="parents-blob-bg"></div><div class="parents-photo"><img alt="A parent and child studying together at home" src="parents.png"/></div></div>
 <div>
 <span class="label" style="color: var(--pulse);">For Parents · Coming Soon</span>
-<h2 style="margin-bottom: 24px;">"Try harder" is often the wrong advice.</h2>
-<p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 20px;">
-          Your child isn't lazy. They might not be ready. Most of us were raised
-          on the idea that learning is a matter of will. Sit down. Open the book.
-          Focus. But the body and mind don't always agree.
-        </p>
-<p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 32px;">
-          We're putting together a free newsletter for parents who want to understand
-          the science behind their child's motivation. No quick fixes. No guilt.
-          Just real insight, written by someone who taught for twenty years.
-        </p>
+<h2 style="margin-bottom: 24px;">Learning does not always respond to more pressure.</h2>
+<p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 20px;">When a child is struggling to focus, the answer is not always to ask for more effort. Fatigue, stress, timing and the learning environment can all affect how easily a student can engage with a task.</p>
+<p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 32px;">We are exploring a simple newsletter for parents about learning, attention and self-regulation. The aim is not to offer quick fixes, but to share practical ideas and research that may help families look at difficult study moments with a little more context.</p>
 <form action="https://formspree.io/f/your-form-id-parents" method="POST">
 <div style="display: flex; gap: 12px; background: var(--bg); padding: 8px; border-radius: 100px; border: 1px solid var(--border);">
 <input name="email" placeholder="your.email@example.com" required="" style="flex: 1; background: transparent; border: none; color: var(--text); padding: 14px 24px; font-size: 1em; outline: none;" type="email"/>
@@ -1231,9 +1332,7 @@
               Notify me
             </button>
 </div>
-<p style="font-size: 0.85em; color: var(--text-muted); margin-top: 16px;">
-            We'll let you know when the first issue is ready. No spam.
-          </p>
+<p style="font-size: 0.85em; color: var(--text-muted); margin-top: 16px;">We'll let you know when the first issue is ready. No spam.</p>
 </form>
 </div>
 </div>
@@ -1242,42 +1341,20 @@
 <section id="founder">
 <div class="container">
 <span class="label">Founder</span>
-<h2 style="margin-bottom: 16px;">Dr. Gabriella Nishizawa</h2>
+<h2 style="margin-bottom: 16px;">Dr. Gabriella S. Nishizawa</h2>
 <p class="section-lead" style="margin-bottom: 40px;">PhD · International Educator · EdTech Researcher · Yokohama, Japan</p>
 <div class="founder-banner">
-<img alt="Dr. Gabriella Nishizawa, Founder of Nitaii Learning Lab" src="founder.png"/>
+<img alt="Dr. Gabriella S. Nishizawa, Founder of Nitaii Learning Lab" src="founder.png"/>
 <div class="founder-banner-overlay">
 <span class="label">20+ years in international education</span>
 <h3>Where research meets design.</h3>
 </div>
 </div>
-<div class="founder-story">
-<p class="founder-story-intro">Twenty years of teaching taught me one thing.</p>
-<p>
-        Students don't love the subjects we teach them. They love
-        <em>the version of themselves they see while learning.</em>
-</p>
-<p>
-        I held up a mirror for years without realising it was a mirror.
-        Every time my students caught a reflection of who they were
-        becoming, they wanted to see more. That hunger drove the learning,
-        not the material.
-      </p>
-<p>
-        Nitaii Learning Lab grew from that insight. Learning is not the
-        absorption of content. It is the <strong>becoming of a self</strong>.
-      </p>
-<p>
-        And no real becoming happens when the body is exhausted, stressed,
-        or unheard. That's why we measure the body before we ask anything
-        of the mind.
-      </p>
-<p class="founder-story-signature">Dr. Gabriella Nishizawa, Founder</p>
-</div>
+<div class="founder-story"><p class="founder-story-intro">Nitaii grew out of questions I kept returning to in education.</p><p>Over the years, I became increasingly interested in what helps learning work in practice: how students make sense of information, what affects concentration, and where technology can genuinely be useful.</p><p>My background in linguistics, computer science education, and library and information science gave me several ways to approach those questions. Nitaii Learning Lab is a place to turn some of them into small tools and pilots that can be tested.</p><p>Focusa is the first active project. The wider aim is simple: build carefully, test assumptions, and learn from what happens in real use.</p><div class="founder-story-signature">Dr. Gabriella S. Nishizawa, Founder</div></div>
 <div class="founder-grid">
 <div class="founder-text">
 <p>
-          Nitaii Learning Lab was founded by <strong style="color: var(--text);">Dr. Gabriella Nishizawa</strong>,
+          Nitaii Learning Lab was founded by <strong style="color: var(--text);">Dr. Gabriella S. Nishizawa</strong>,
           an international educator and researcher with over 20 years of experience across Hungary,
           Germany, and Japan.
         </p>
@@ -1299,7 +1376,6 @@
 <span class="cred">BA Library &amp; Information Science</span>
 <span class="cred">iOS Developer</span>
 <span class="cred">International Examiner</span>
-<span class="cred">Yokohama Local Hire</span>
 </div>
 </div>
 </div>
