@@ -279,31 +279,6 @@
       text-transform: uppercase;
     }
 
-    /* Mission strip */
-    .mission {
-      padding: 60px 0;
-      background: var(--bg-2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .mission-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 32px;
-    }
-    .mission-item h4 {
-      font-size: 0.85em;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-    .mission-item p {
-      color: var(--text);
-      font-size: 1em;
-      font-weight: 500;
-    }
 
     /* Sections */
     section { padding: 100px 0; }
@@ -495,28 +470,7 @@
       gap: 60px;
       align-items: start;
     }
-    .pillars {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    .pillar {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px 28px;
-      border-left: 3px solid var(--accent);
-    }
-    .pillar h4 {
-      color: var(--text);
-      font-size: 1.05em;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-    .pillar p {
-      color: var(--text-muted);
-      font-size: 0.95em;
-    }
+
 
     /* Projects section */
     .projects-section {
@@ -1000,10 +954,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      border-radius: 63% 37% 55% 45% / 44% 58% 42% 56%;
-      animation: morph 14s ease-in-out infinite;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.28);
-      background: var(--bg-card);
+
     }
     #educators .educators-photo img {
       width: 100%;
@@ -1061,11 +1012,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      border-radius: 58% 42% 46% 54% / 42% 55% 45% 58%;
-      animation: morph 18s ease-in-out infinite;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.28);
-      background: var(--bg-card);
-      z-index: 1;
+
     }
     .about-photo img {
       width: 100%;
@@ -1157,6 +1104,192 @@
       right: 0;
       bottom: 22px;
     }
+
+
+    /* Shared organic photo frame for About, Educators and Parents */
+    .about-visual,
+    #educators .educators-visual,
+    #parents .parents-visual {
+      position: relative;
+      aspect-ratio: 1;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .about-blob-bg,
+    #educators .educators-blob-bg,
+    #parents .parents-blob-bg {
+      position: absolute;
+      inset: -8%;
+      border-radius: 70% 30% 50% 50% / 50% 50% 70% 30%;
+      background: linear-gradient(135deg, var(--pulse) 0%, var(--accent) 100%);
+      opacity: 0.18;
+      animation: blobMorph 14s ease-in-out infinite;
+      filter: blur(20px);
+      z-index: 0;
+    }
+
+    .about-photo,
+    #educators .educators-photo,
+    #parents .parents-photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(255,94,126,0.25);
+      animation: blobMorph 16s ease-in-out infinite;
+      background: linear-gradient(135deg, rgba(79,195,247,0.15), rgba(255,94,126,0.15));
+      z-index: 1;
+    }
+
+    .about-photo img,
+    #educators .educators-photo img,
+    #parents .parents-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85) contrast(1.05);
+    }
+
+    @media (max-width: 900px) {
+      .about-visual,
+      #educators .educators-visual,
+      #parents .parents-visual {
+        max-width: 420px;
+      }
+    }
+
+    /* RALL project photo */
+    .project-photo-visual {
+      position: relative;
+      width: 100%;
+      max-width: 250px;
+      aspect-ratio: 1;
+      margin: 0 auto;
+    }
+    .project-photo-blob {
+      position: absolute;
+      inset: -8%;
+      border-radius: 70% 30% 50% 50% / 50% 50% 70% 30%;
+      background: linear-gradient(135deg, var(--pulse) 0%, var(--accent) 100%);
+      opacity: 0.16;
+      animation: blobMorph 14s ease-in-out infinite;
+      filter: blur(18px);
+      z-index: 0;
+    }
+    .project-photo-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(255,94,126,0.20);
+      animation: blobMorph 16s ease-in-out infinite;
+      background: linear-gradient(135deg, rgba(79,195,247,0.15), rgba(255,94,126,0.15));
+      z-index: 1;
+    }
+    .project-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.9) contrast(1.03);
+    }
+
+
+    /* Unified organic photo frame: About, Educators, Parents */
+    .about-visual,
+    #educators .educators-visual,
+    #parents .parents-visual {
+      position: relative;
+      aspect-ratio: 1;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .about-blob-bg,
+    #educators .educators-blob-bg,
+    #parents .parents-blob-bg {
+      position: absolute;
+      inset: -8%;
+      border-radius: 70% 30% 50% 50% / 50% 50% 70% 30%;
+      background: linear-gradient(135deg, var(--pulse) 0%, var(--accent) 100%);
+      opacity: 0.18;
+      animation: blobMorph 14s ease-in-out infinite;
+      filter: blur(20px);
+      z-index: 0;
+    }
+
+    .about-photo,
+    #educators .educators-photo,
+    #parents .parents-photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(255,94,126,0.25);
+      animation: blobMorph 16s ease-in-out infinite;
+      background: linear-gradient(135deg, rgba(79,195,247,0.15), rgba(255,94,126,0.15));
+      z-index: 1;
+    }
+
+    .about-photo img,
+    #educators .educators-photo img,
+    #parents .parents-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85) contrast(1.05);
+    }
+
+    @media (max-width: 900px) {
+      .about-visual,
+      #educators .educators-visual,
+      #parents .parents-visual {
+        max-width: 420px;
+      }
+    }
+
+
+    /* Compact About layout */
+    #about .about-nitaii-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 56px;
+      align-items: center;
+    }
+
+    #about .about-copy {
+      display: block;
+      max-width: 650px;
+    }
+
+    #about .about-copy p:last-child {
+      margin-bottom: 0 !important;
+    }
+
+    #about .about-visual {
+      max-width: 360px;
+    }
+
+    @media (max-width: 900px) {
+      #about .about-nitaii-grid {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      #about .about-copy {
+        max-width: none;
+      }
+
+      #about .about-visual {
+        max-width: 360px;
+      }
+    }
 </style>
 </head>
 <body>
@@ -1202,28 +1335,6 @@
 </div>
 </div>
 </section>
-<section class="mission">
-<div class="container">
-<div class="mission-grid">
-<div class="mission-item">
-<h4>Founded</h4>
-<p>2026 · Yokohama, Japan</p>
-</div>
-<div class="mission-item">
-<h4>Focus</h4>
-<p>Biometric-informed learning</p>
-</div>
-<div class="mission-item">
-<h4>Method</h4>
-<p>Research + iterative design</p>
-</div>
-<div class="mission-item">
-<h4>Status</h4>
-<p>1 active project · more in research</p>
-</div>
-</div>
-</div>
-</section>
 <section class="philosophy" id="philosophy">
 <div class="philosophy-deco">
 <svg viewbox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
@@ -1249,29 +1360,12 @@
 </section>
 <section id="about">
 <div class="container">
-<div class="about-nitaii-grid"><div class="about-copy"><div>
+<div class="about-nitaii-grid"><div class="about-copy">
 <span class="label">About Nitaii</span>
 <h2>An independent lab at the intersection of education, technology, and science.</h2>
-<p style="color: var(--text-muted); margin-bottom: 16px;">Nitaii Learning Lab starts from a simple idea: <strong style="color: var(--text);">learning involves both mind and body</strong>, and digital tools should be designed with that in mind.</p>
+<p style="color: var(--text-muted); margin-bottom: 16px;">Founded in 2024, Nitaii Learning Lab starts from a simple idea: <strong style="color: var(--text);">learning involves both mind and body</strong>, and digital tools should be designed with that in mind.</p>
 <p style="color: var(--text-muted);">We develop and test learning-support tools and small educational pilots. Rather than treating data as an answer, we use it as one input among many and look at what is actually useful for learners and educators.</p>
-</div><div class="pillars">
-<div class="pillar">
-<h4>Research-informed</h4>
-<p>Where relevant, our work draws on published research in learning, cognition and physiology.</p>
-</div>
-<div class="pillar">
-<h4>Learner-respecting</h4>
-<p>No engagement traps or unnecessary pressure. The goal is to support learning without demanding more attention than the task itself.</p>
-</div>
-<div class="pillar">
-<h4>Biometric-informed</h4>
-<p>Exploring heart-rate and HRV data as additional signals for reflection on learning, focus and wellbeing.</p>
-</div>
-<div class="pillar">
-<h4>Cross-disciplinary</h4>
-<p>Education, computer science, library and information science, linguistics and software design.</p>
-</div>
-</div></div><div class="about-visual"><div class="about-blob-bg"></div><div class="about-photo"><img alt="Nitaii learning lab materials, notes, prototype sketches and tools" src="about.png"/></div></div></div>
+</div><div class="about-visual"><div class="about-blob-bg"></div><div class="about-photo"><img alt="Nitaii learning lab materials, notes, prototype sketches and tools" src="about.png"/></div></div></div>
 </div>
 </section>
 <section class="projects-section" id="projects">
@@ -1310,7 +1404,7 @@
 </div>
 </div>
 </div>
-</div><div class="project-card"><div class="project-grid"><div><div class="project-meta"><span>02</span><span>Robot-Assisted Language Learning</span><span>Exploratory · Pilot Design</span></div><h3>Robot-Assisted Language Learning for Hungarian in Diaspora Communities</h3><p>An exploratory project looking at how educational and social robots could support Hungarian language practice for children growing up outside Hungary. The first phase will focus on small-scale activities for spoken interaction, vocabulary and simple task-based language practice.</p><div class="project-tags"><span class="tag">RALL</span><span class="tag">Hungarian</span><span class="tag">Educational Robotics</span><span class="tag">Language Education</span><span class="tag">Diaspora Education</span></div><div class="project-status"><span class="status-dot"></span> Exploratory project · classroom pilot in design</div></div><div class="project-mini-visual"><div class="rall-visual"><div class="rall-bubble rall-bubble-a">Szia!</div><div class="rall-robot">◉  ◉</div><div class="rall-bubble rall-bubble-b">Beszéljünk.</div></div></div></div></div>
+</div><div class="project-card"><div class="project-grid"><div><div class="project-meta"><span>02</span><span>Robot-Assisted Language Learning</span><span>Exploratory · Pilot Design</span></div><h3>Robot-Assisted Language Learning for Hungarian in Diaspora Communities</h3><p>An exploratory project looking at how educational and social robots could support Hungarian language practice for children growing up outside Hungary. The first phase will focus on small-scale activities for spoken interaction, vocabulary and simple task-based language practice.</p><div class="project-tags"><span class="tag">RALL</span><span class="tag">Hungarian</span><span class="tag">Educational Robotics</span><span class="tag">Language Education</span><span class="tag">Diaspora Education</span></div><div class="project-status"><span class="status-dot"></span> Exploratory project · classroom pilot in design</div></div><div class="project-mini-visual"><div class="project-photo-visual"><div class="project-photo-blob"></div><div class="project-photo-frame"><img alt="Children using a classroom robot during a language learning activity" src="rall.png"/></div></div></div></div></div>
 </div>
 </section>
 <section id="educators" style="padding: 100px 0; background: var(--bg);">
@@ -1350,7 +1444,7 @@
 <h3>Where research meets design.</h3>
 </div>
 </div>
-<div class="founder-story"><p class="founder-story-intro">Nitaii grew out of questions I kept returning to in education.</p><p>Over the years, I became increasingly interested in what helps learning work in practice: how students make sense of information, what affects concentration, and where technology can genuinely be useful.</p><p>My background in linguistics, computer science education, and library and information science gave me several ways to approach those questions. Nitaii Learning Lab is a place to turn some of them into small tools and pilots that can be tested.</p><p>Focusa is the first active project. The wider aim is simple: build carefully, test assumptions, and learn from what happens in real use.</p><div class="founder-story-signature">Dr. Gabriella S. Nishizawa, Founder</div></div>
+<div class="founder-story"><p class="founder-story-intro">Nitaii, founded in 2024, grew out of questions I kept returning to in education.</p><p>Over the years, I became increasingly interested in what helps learning work in practice: how students make sense of information, what affects concentration, and where technology can genuinely be useful.</p><p>My background in linguistics, computer science education, and library and information science gave me several ways to approach those questions. Nitaii Learning Lab is a place to turn some of them into small tools and pilots that can be tested.</p><p>Focusa is the first active project. The wider aim is simple: build carefully, test assumptions, and learn from what happens in real use.</p><div class="founder-story-signature">Dr. Gabriella S. Nishizawa, Founder</div></div>
 <div class="founder-grid">
 <div class="founder-text">
 <p>
@@ -1406,7 +1500,7 @@
 <div>
 <a class="logo" href="#" onclick="event.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'});" style="margin-bottom: 16px; display: inline-block;">Nitaii<span class="dot">.</span> <small>Learning Lab</small></a>
 <p>Independent EdTech research lab.</p>
-<p>Yokohama, Japan · Founded 2026</p>
+<p>Yokohama, Japan · Founded 2024</p>
 </div>
 <div>
 <h4>Lab</h4>
