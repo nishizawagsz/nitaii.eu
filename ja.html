@@ -1521,7 +1521,7 @@
 <h2 style="margin-bottom: 24px;">学習は、プレッシャーを増やせば必ず進むわけではありません</h2>
 <p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 20px;">子どもが集中しにくいとき、より努力するよう求めることがいつも最善とは限りません。疲労、ストレス、時間帯、学習環境などは、課題に取り組みやすいかどうかに影響します。</p>
 <p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 32px;">学習、注意、自己調整について保護者向けにお届けするシンプルなニュースレターを検討しています。すぐに効く解決策を示すのではなく、学習がうまくいかない場面を少し広い文脈から捉える助けになる実践的なアイデアや研究を共有することが目的です。</p>
-<form action="https://formspree.io/f/your-form-id-parents" method="POST">
+<form id="parentsNewsletterForm">
 <div style="display: flex; gap: 12px; background: var(--bg); padding: 8px; border-radius: 100px; border: 1px solid var(--border);">
 <input name="email" placeholder="your.email@example.com" required="" style="flex: 1; background: transparent; border: none; color: var(--text); padding: 14px 24px; font-size: 1em; outline: none;" type="email"/>
 <button style="background: var(--pulse); color: white; border: none; padding: 14px 24px; border-radius: 100px; font-weight: 600; cursor: pointer; transition: transform 0.2s;" type="submit">
@@ -1529,6 +1529,7 @@
             </button>
 </div>
 <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 16px;">第1号の準備ができたらお知らせします。不要なメールは送りません。</p>
+<div id="parentsStatus" role="status" aria-live="polite" style="display:none; margin-top:16px; padding:14px 16px; border-radius:14px; font-size:0.95em;"></div>
 </form>
 </div>
 </div>
@@ -1663,6 +1664,12 @@
 </footer>
 <script>
 (function () {
+  // FormSubmit endpoint. After confirming info@nitaii.eu with FormSubmit,
+  // replace the address below with the random string they give you, e.g.
+  //   https://formsubmit.co/ajax/abc123def456...
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@nitaii.eu';
+  const CONTACT_EMAIL = 'info@nitaii.eu';
+
   const emailForm = document.getElementById('betaEmailForm');
   const emailInput = document.getElementById('betaEmail');
   const modal = document.getElementById('betaModal');
@@ -1729,7 +1736,7 @@
     };
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/info@nitaii.eu', {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1761,11 +1768,74 @@
       statusBox.style.background = 'rgba(255,94,126,0.10)';
       statusBox.style.border = '1px solid rgba(255,94,126,0.35)';
       statusBox.style.color = 'var(--text)';
-      statusBox.textContent = "送信中にエラーが発生しました。もう一度お試しください。";
+      var mailtoHref = 'mailto:' + CONTACT_EMAIL +
+        '?subject=' + encodeURIComponent('Focusa beta application') +
+        '&body=' + encodeURIComponent(
+          'Name: ' + payload.name + '\n' +
+          'Email: ' + payload.email + '\n' +
+          'iPhone / iOS: ' + payload.device + '\n' +
+          'Polar H10: ' + payload.polar_h10 + '\n' +
+          'Note: ' + payload.note + '\n'
+        );
+      statusBox.innerHTML = '送信中にエラーが発生しました。ネットワークまたは広告ブロッカーがフォームサービスを遮断している可能性があります。' + '<a href="' + mailtoHref + '" style="color:var(--pulse);font-weight:600;text-decoration:underline;">メールで直接お送りください</a>' + '。同じように対応いたします。';
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;
     }
   });
+
+  // --- Parents newsletter signup ---
+  const parentsForm = document.getElementById('parentsNewsletterForm');
+  if (parentsForm) {
+    parentsForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      if (!parentsForm.reportValidity()) return;
+
+      const parentsButton = parentsForm.querySelector('button[type="submit"]');
+      const parentsInput = parentsForm.querySelector('input[name="email"]');
+      const parentsBox = document.getElementById('parentsStatus');
+      const parentsEmail = parentsInput.value.trim();
+      const parentsButtonText = parentsButton.textContent;
+
+      parentsButton.disabled = true;
+      parentsButton.textContent = '送信中…';
+      parentsBox.style.display = 'none';
+
+      try {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: '保護者向けニュースレター登録',
+            _captcha: 'false',
+            _template: 'table',
+            email: parentsEmail,
+            source: 'nitaii.eu parents newsletter (JA)'
+          })
+        });
+        const result = await response.json();
+        if (!response.ok || result.success === false) throw new Error('Form submission failed');
+
+        parentsBox.style.display = 'block';
+        parentsBox.style.background = 'rgba(79,195,247,0.12)';
+        parentsBox.style.border = '1px solid rgba(79,195,247,0.35)';
+        parentsBox.style.color = 'var(--text)';
+        parentsBox.textContent = 'ありがとうございます。第1号の準備ができましたらお知らせします。';
+        parentsForm.reset();
+      } catch (error) {
+        const parentsMailto = 'mailto:' + CONTACT_EMAIL +
+          '?subject=' + encodeURIComponent('保護者向けニュースレター登録') +
+          '&body=' + encodeURIComponent('Email: ' + parentsEmail + '\n');
+        parentsBox.style.display = 'block';
+        parentsBox.style.background = 'rgba(255,94,126,0.10)';
+        parentsBox.style.border = '1px solid rgba(255,94,126,0.35)';
+        parentsBox.style.color = 'var(--text)';
+        parentsBox.innerHTML = 'アドレスを自動で保存できませんでした。ネットワークまたは広告ブロッカーがフォームサービスを遮断している可能性があります。' + '<a href="' + parentsMailto + '" style="color:var(--pulse);font-weight:600;text-decoration:underline;">メールでアドレスをお送りください</a>' + '。';
+      }
+
+      parentsButton.disabled = false;
+      parentsButton.textContent = parentsButtonText;
+    });
+  }
 })();
 </script>
 </body>

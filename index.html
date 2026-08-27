@@ -1523,7 +1523,7 @@
 <h2 style="margin-bottom: 24px;">Learning does not always respond to more pressure</h2>
 <p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 20px;">When a child is struggling to focus, the answer is not always to ask for more effort. Fatigue, stress, timing and the learning environment can all affect how easily a student can engage with a task.</p>
 <p style="color: var(--text-muted); font-size: 1.05em; margin-bottom: 32px;">We are exploring a simple newsletter for parents about learning, attention and self-regulation. The aim is not to offer quick fixes, but to share practical ideas and research that may help families look at difficult study moments with a little more context.</p>
-<form action="https://formspree.io/f/your-form-id-parents" method="POST">
+<form id="parentsNewsletterForm">
 <div style="display: flex; gap: 12px; background: var(--bg); padding: 8px; border-radius: 100px; border: 1px solid var(--border);">
 <input name="email" placeholder="your.email@example.com" required="" style="flex: 1; background: transparent; border: none; color: var(--text); padding: 14px 24px; font-size: 1em; outline: none;" type="email"/>
 <button style="background: var(--pulse); color: white; border: none; padding: 14px 24px; border-radius: 100px; font-weight: 600; cursor: pointer; transition: transform 0.2s;" type="submit">
@@ -1531,6 +1531,7 @@
             </button>
 </div>
 <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 16px;">We'll let you know when the first issue is ready. No spam.</p>
+<div id="parentsStatus" role="status" aria-live="polite" style="display:none; margin-top:16px; padding:14px 16px; border-radius:14px; font-size:0.95em;"></div>
 </form>
 </div>
 </div>
@@ -1666,6 +1667,12 @@
 </footer>
 <script>
 (function () {
+  // FormSubmit endpoint. After confirming info@nitaii.eu with FormSubmit,
+  // replace the address below with the random string they give you, e.g.
+  //   https://formsubmit.co/ajax/abc123def456...
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@nitaii.eu';
+  const CONTACT_EMAIL = 'info@nitaii.eu';
+
   const emailForm = document.getElementById('betaEmailForm');
   const emailInput = document.getElementById('betaEmail');
   const modal = document.getElementById('betaModal');
@@ -1723,6 +1730,8 @@
 
     const payload = {
       _subject: "Focusa beta application",
+      _captcha: 'false',
+      _template: 'table',
       name: document.getElementById('betaName').value.trim(),
       email: modalEmail.value.trim(),
       device: document.getElementById('betaDevice').value.trim(),
@@ -1732,7 +1741,7 @@
     };
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/info@nitaii.eu', {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1764,11 +1773,74 @@
       statusBox.style.background = 'rgba(255,94,126,0.10)';
       statusBox.style.border = '1px solid rgba(255,94,126,0.35)';
       statusBox.style.color = 'var(--text)';
-      statusBox.textContent = "Something went wrong while sending your application. Please try again.";
+      var mailtoHref = 'mailto:' + CONTACT_EMAIL +
+        '?subject=' + encodeURIComponent('Focusa beta application') +
+        '&body=' + encodeURIComponent(
+          'Name: ' + payload.name + '\n' +
+          'Email: ' + payload.email + '\n' +
+          'iPhone / iOS: ' + payload.device + '\n' +
+          'Polar H10: ' + payload.polar_h10 + '\n' +
+          'Note: ' + payload.note + '\n'
+        );
+      statusBox.innerHTML = 'Something went wrong while sending your application. Your network or a browser/DNS ad-blocker may be blocking our form service. ' + '<a href="' + mailtoHref + '" style="color:var(--pulse);font-weight:600;text-decoration:underline;">Send it to us by email</a>' + ' instead — we will pick it up the same way.';
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;
     }
   });
+
+  // --- Parents newsletter signup ---
+  const parentsForm = document.getElementById('parentsNewsletterForm');
+  if (parentsForm) {
+    parentsForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      if (!parentsForm.reportValidity()) return;
+
+      const parentsButton = parentsForm.querySelector('button[type="submit"]');
+      const parentsInput = parentsForm.querySelector('input[name="email"]');
+      const parentsBox = document.getElementById('parentsStatus');
+      const parentsEmail = parentsInput.value.trim();
+      const parentsButtonText = parentsButton.textContent;
+
+      parentsButton.disabled = true;
+      parentsButton.textContent = 'Sending…';
+      parentsBox.style.display = 'none';
+
+      try {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: 'Parents newsletter signup',
+            _captcha: 'false',
+            _template: 'table',
+            email: parentsEmail,
+            source: 'nitaii.eu parents newsletter (EN)'
+          })
+        });
+        const result = await response.json();
+        if (!response.ok || result.success === false) throw new Error('Form submission failed');
+
+        parentsBox.style.display = 'block';
+        parentsBox.style.background = 'rgba(79,195,247,0.12)';
+        parentsBox.style.border = '1px solid rgba(79,195,247,0.35)';
+        parentsBox.style.color = 'var(--text)';
+        parentsBox.textContent = 'Thank you — we will let you know when the first issue is ready.';
+        parentsForm.reset();
+      } catch (error) {
+        const parentsMailto = 'mailto:' + CONTACT_EMAIL +
+          '?subject=' + encodeURIComponent('Parents newsletter signup') +
+          '&body=' + encodeURIComponent('Email: ' + parentsEmail + '\n');
+        parentsBox.style.display = 'block';
+        parentsBox.style.background = 'rgba(255,94,126,0.10)';
+        parentsBox.style.border = '1px solid rgba(255,94,126,0.35)';
+        parentsBox.style.color = 'var(--text)';
+        parentsBox.innerHTML = 'We could not save your address automatically. Your network or an ad-blocker may be blocking our form service. ' + '<a href="' + parentsMailto + '" style="color:var(--pulse);font-weight:600;text-decoration:underline;">Email us your address</a>' + ' instead.';
+      }
+
+      parentsButton.disabled = false;
+      parentsButton.textContent = parentsButtonText;
+    });
+  }
 })();
 </script>
 </body>
