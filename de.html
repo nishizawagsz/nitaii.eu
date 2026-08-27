@@ -1311,6 +1311,96 @@
       animation-timing-function: ease-in-out !important;
     }
 
+
+
+
+
+    /* Focusa beta application modal */
+    .beta-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(5,10,20,0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+    .beta-modal.open { display: flex; }
+    .beta-modal-panel {
+      width: min(680px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.45);
+      position: relative;
+      text-align: left;
+    }
+    .beta-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 1.25em;
+      cursor: pointer;
+    }
+    .beta-modal-panel h3 {
+      font-size: 1.8em;
+      margin: 6px 48px 8px 0;
+      letter-spacing: -0.02em;
+    }
+    .beta-modal-intro { color: var(--text-muted); margin-bottom: 24px; }
+    .beta-field { margin-bottom: 18px; }
+    .beta-field label {
+      display: block;
+      font-size: 0.86em;
+      font-weight: 600;
+      margin-bottom: 7px;
+      color: var(--text);
+    }
+    .beta-field input,
+    .beta-field select,
+    .beta-field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-2);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+    }
+    .beta-field textarea { min-height: 110px; resize: vertical; }
+    .beta-field input:focus,
+    .beta-field select:focus,
+    .beta-field textarea:focus { border-color: var(--accent); }
+    .beta-submit-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .beta-submit-row .btn { border: none; cursor: pointer; }
+    .beta-modal-note {
+      color: var(--text-muted);
+      font-size: 0.82em;
+      margin-top: 14px;
+    }
+    body.modal-open { overflow: hidden; }
+
+
 </style>
 </head>
 <body>
@@ -1324,10 +1414,7 @@
 <li><a href="#parents">Eltern</a></li>
 <li><a href="#founder">Gründerin</a></li>
 <li><a href="#beta">Beta</a></li>
-<li class="lang-switch">
-<a class="" href="index.html">EN</a>
-<a class="active" href="de.html">DE</a>
-</li>
+<li class="lang-switch"><a href="index.html">EN</a><a class="active" href="de.html">DE</a><a href="ja.html">JA</a></li>
 </ul>
 </div>
 </nav>
@@ -1411,7 +1498,7 @@
 </div>
 </div>
 </div>
-</div><div class="project-card"><div class="project-grid"><div><div class="project-meta"><span>02</span><span>Robot-Assisted Language Learning</span><span>Explorativ · Pilotplanung</span></div><h3>Robot-Assisted Language Learning für Ungarisch in der Diaspora</h3><p>Ein exploratives Projekt zur Frage, wie Bildungs- und soziale Roboter die ungarische Sprachpraxis von Kindern unterstützen können, die außerhalb Ungarns aufwachsen. In der ersten Phase stehen kleine Aktivitäten zu mündlicher Interaktion, Wortschatz und einfachen aufgabenbasierten Sprachübungen im Mittelpunkt.</p><div class="project-tags"><span class="tag">RALL</span><span class="tag">Ungarisch</span><span class="tag">Bildungsrobotik</span><span class="tag">Sprachlernen</span><span class="tag">Diaspora-Bildung</span></div><div class="project-status"><span class="status-dot"></span> Exploratives Projekt · Unterrichtspilot in Planung</div></div><div class="project-mini-visual"><div class="project-photo-visual"><div class="project-photo-blob"></div><div class="project-photo-frame"><img alt="Kinder bei einer Sprachlernaktivität mit einem Lernroboter" src="rall.png"/></div></div></div></div></div>
+</div><div class="project-card"><div class="project-grid"><div><div class="project-meta"><span>02</span><span>Robotik und Sprachenlernen</span><span>Aktiv · Pilotplanung</span></div><h3>Robot-Assisted Language Learning</h3><p>Ein exploratives Projekt zur Frage, wie Bildungs- und soziale Roboter die Sprachpraxis mehrsprachiger Kinder und junger Lernender unterstützen können. In der ersten Phase stehen kleine Aktivitäten zur mündlichen Interaktion, Wortschatzentwicklung und einfachen aufgabenbasierten Sprachübungen im Mittelpunkt.</p><div class="project-tags"><span class="tag">RALL</span><span class="tag">Ungarisch</span><span class="tag">Bildungsrobotik</span><span class="tag">Sprachbildung</span><span class="tag">Diaspora-Bildung</span></div><div class="project-status"><span class="status-dot"></span> Exploratives Projekt · Unterrichtspilot in Planung</div></div><div class="project-mini-visual"><div class="project-photo-visual"><div class="project-photo-blob"></div><div class="project-photo-frame"><img alt="Kinder bei einer Sprachlernaktivität mit einem Lernroboter" src="rall.png"/></div></div></div></div></div>
 </div>
 </section>
 <section id="educators" style="padding: 100px 0; background: var(--bg);">
@@ -1472,18 +1559,23 @@
 <section class="beta-cta" id="beta">
 <div class="container">
 <span class="label">Focusa Beta · In Entwicklung</span>
-<h2>Gehören Sie zu den Ersten, die Focusa ausprobieren.</h2>
+<h2>Gehören Sie zu den Ersten, die Focusa ausprobieren</h2>
 <p class="section-lead">Wir bereiten den frühen Beta-Zugang zu Focusa vor, unserem biometrisch informierten Lernbegleiter. Hinterlassen Sie Ihre E-Mail-Adresse, und wir melden uns, sobald Beta-Plätze verfügbar sind.</p>
-<form action="https://formspree.io/f/your-form-id" method="POST">
-<div class="form-card">
-<input name="email" placeholder="ihre.email@beispiel.de" required="" type="email"/>
-<button type="submit">Für die Beta anmelden</button>
-</div>
-<p class="form-note">Wir verwenden Ihre E-Mail-Adresse ausschließlich, um Sie über den Focusa-Beta-Zugang zu informieren. Kein Spam.</p>
-</form>
-</div>
-</section>
-<footer>
+<form id="betaEmailForm"><div class="form-card"><input autocomplete="email" id="betaEmail" name="email" placeholder="ihre.email@beispiel.de" required="" type="email"/><button type="submit">Für die Beta anmelden</button></div><p class="form-note">Geben Sie Ihre E-Mail-Adresse ein, um zum kurzen Beta-Bewerbungsformular zu gelangen.</p></form>
+</div></section>
+<div aria-hidden="true" aria-labelledby="betaModalTitle" aria-modal="true" class="beta-modal" id="betaModal" role="dialog">
+<div class="beta-modal-panel"><button aria-label="Beta-Bewerbung schließen" class="beta-modal-close" id="betaModalClose" type="button">×</button>
+<span class="label">Focusa Beta-Bewerbung</span><h3 id="betaModalTitle">Noch ein paar Angaben, bevor wir uns melden</h3>
+<p class="beta-modal-intro">Focusa wird derzeit auf dem iPhone mit einem Polar-H10-Herzfrequenzsensor getestet. Erzählen Sie uns kurz etwas über Ihre technische Ausstattung, damit wir geeignete Beta-Tester kontaktieren können.</p>
+<form id="betaApplicationForm">
+<div class="beta-field"><label for="betaName">Name</label><input autocomplete="name" id="betaName" name="name" required="" type="text"/></div>
+<div class="beta-field"><label for="betaApplicationEmail">E-Mail</label><input autocomplete="email" id="betaApplicationEmail" name="email" required="" type="email"/></div>
+<div class="beta-field"><label for="betaDevice">iPhone-Modell / iOS-Version</label><input id="betaDevice" name="device" placeholder="z. B. iPhone 15, iOS 26" required="" type="text"/></div>
+<div class="beta-field"><label for="betaPolar">Haben Sie Zugang zu einem Polar H10?</label><select id="betaPolar" name="polar" required=""><option value="">Bitte auswählen</option><option>Ja</option><option>Nein</option></select></div>
+<div class="beta-field"><label for="betaNote">Möchten Sie uns noch etwas mitteilen? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label><textarea id="betaNote" name="note" placeholder="Zum Beispiel, wie Sie Focusa beim Lernen oder bei der Prüfungsvorbereitung nutzen möchten."></textarea></div>
+<div class="beta-submit-row"><button class="btn btn-primary" type="submit">Beta-Anfrage senden</button><button class="btn btn-ghost" id="betaCancel" type="button">Abbrechen</button></div>
+<p class="beta-modal-note">Beim Absenden wird Ihr E-Mail-Programm mit den Bewerbungsdaten und info@nitaii.eu als Empfänger geöffnet. Diese Website speichert keine Daten.</p>
+</form></div></div><footer>
 <div class="container">
 <div class="footer-grid">
 <div>
@@ -1507,5 +1599,12 @@
 <div class="copyright">© 2026 Nitaii Learning Lab · Alle Rechte vorbehalten.</div>
 </div>
 </footer>
-</body>
+<script>(function () {
+  const emailForm=document.getElementById('betaEmailForm'), emailInput=document.getElementById('betaEmail'), modal=document.getElementById('betaModal'), modalEmail=document.getElementById('betaApplicationEmail'), closeButton=document.getElementById('betaModalClose'), cancelButton=document.getElementById('betaCancel'), applicationForm=document.getElementById('betaApplicationForm');
+  function openModal(){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');setTimeout(()=>document.getElementById('betaName').focus(),0)}
+  function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');emailInput.focus()}
+  emailForm.addEventListener('submit',e=>{e.preventDefault();if(!emailForm.reportValidity())return;modalEmail.value=emailInput.value.trim();openModal()});
+  closeButton.addEventListener('click',closeModal);cancelButton.addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal()});
+  applicationForm.addEventListener('submit',e=>{e.preventDefault();if(!applicationForm.reportValidity())return;const name=document.getElementById('betaName').value.trim(),email=modalEmail.value.trim(),device=document.getElementById('betaDevice').value.trim(),polar=document.getElementById('betaPolar').value,note=document.getElementById('betaNote').value.trim();const subject='Focusa Beta-Bewerbung — '+name;const body=['Focusa Beta-Bewerbung','','Name: '+name,'E-Mail: '+email,'iPhone / iOS: '+device,'Polar-H10-Zugang: '+polar,'','Zusätzliche Nachricht:',note||'—'].join('\n');window.location.href='mailto:info@nitaii.eu?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body)});
+})();</script></body>
 </html>
