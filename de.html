@@ -1602,10 +1602,10 @@
 </div>
 </footer>
 <script>(function () {
-  // FormSubmit endpoint. After confirming info@nitaii.eu with FormSubmit,
-  // replace the address below with the random string they give you, e.g.
-  //   https://formsubmit.co/ajax/abc123def456...
-  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@nitaii.eu';
+  // FormSubmit endpoint for info@nitaii.eu (confirmed 2026-08-27).
+  // The random string keeps the address out of the page source, away from spam bots.
+  // Submissions are delivered to info@nitaii.eu, which forwards to Gmail.
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/464637697de41bcaf83dd221340a4600';
   const CONTACT_EMAIL = 'info@nitaii.eu';
 
   const emailForm=document.getElementById('betaEmailForm'), emailInput=document.getElementById('betaEmail'), modal=document.getElementById('betaModal'), modalEmail=document.getElementById('betaApplicationEmail'), closeButton=document.getElementById('betaModalClose'), cancelButton=document.getElementById('betaCancel'), applicationForm=document.getElementById('betaApplicationForm');
