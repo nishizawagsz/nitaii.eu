@@ -1751,7 +1751,7 @@
       });
 
       const result = await response.json();
-      if (!response.ok || result.success === false) throw new Error('Form submission failed');
+      if (!response.ok || String(result.success) === 'false') throw new Error('Form submission failed');
 
       applicationForm.style.display = 'none';
       const intro = modal.querySelector('.beta-modal-intro');
@@ -1818,7 +1818,7 @@
           })
         });
         const result = await response.json();
-        if (!response.ok || result.success === false) throw new Error('Form submission failed');
+        if (!response.ok || String(result.success) === 'false') throw new Error('Form submission failed');
 
         parentsBox.style.display = 'block';
         parentsBox.style.background = 'rgba(79,195,247,0.12)';
