@@ -1392,7 +1392,24 @@
       flex-wrap: wrap;
       margin-top: 8px;
     }
-    .beta-submit-row .btn { border: none; cursor: pointer; }
+    .beta-submit-row .btn { cursor: pointer; font-family: inherit; font-size: 0.95em; }
+    .beta-submit-row .btn-primary { border: none; }
+    /* <button> inherits a light UA background, so .btn-ghost needs an explicit
+       transparent one — otherwise it renders white text on a white button. */
+    .beta-submit-row .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .beta-submit-row .btn-ghost:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .beta-submit-row .btn-ghost:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
     .beta-modal-note {
       color: var(--text-muted);
       font-size: 0.82em;
@@ -1575,9 +1592,9 @@
 <div class="beta-field"><label for="betaPolar">Haben Sie Zugang zu einem Polar H10?</label><select id="betaPolar" name="polar" required=""><option value="">Bitte auswählen</option><option>Ja</option><option>Nein</option></select></div>
 <div class="beta-field"><label for="betaNote">Möchten Sie uns noch etwas mitteilen? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label><textarea id="betaNote" name="note" placeholder="Zum Beispiel, wie Sie Focusa beim Lernen oder bei der Prüfungsvorbereitung nutzen möchten."></textarea></div>
 <div class="beta-submit-row"><button class="btn btn-primary" type="submit">Beta-Anfrage senden</button><button class="btn btn-ghost" id="betaCancel" type="button">Abbrechen</button></div>
-<div id="betaSubmitStatus" role="status" aria-live="polite" style="display:none; margin-top:18px; padding:16px 18px; border-radius:14px;"></div>
 <p class="beta-modal-note">Ihre Angaben werden sicher übermittelt und ausschließlich zur Kontaktaufnahme bezüglich des Focusa-Betatests verwendet.</p>
-</form></div></div><footer>
+</form><<div id="betaSubmitStatus" role="status" aria-live="polite" style="display:none; margin-top:18px; padding:16px 18px; border-radius:14px;"></div>
+/div></div><footer>
 <div class="container">
 <div class="footer-grid">
 <div>
